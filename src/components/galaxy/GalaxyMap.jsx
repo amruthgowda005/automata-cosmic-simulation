@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback, useState } from 'react'
+import { useRef, useMemo, useCallback, useState, Suspense } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import * as THREE from 'three'
@@ -165,11 +165,13 @@ export default function GalaxyMap() {
         gl={{ antialias: true, alpha: false }}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
-        <GalaxyScene
-          onPlanetClick={handlePlanetClick}
-          completedWorlds={completedWorlds}
-          onLabelsUpdate={handleLabelsUpdate}
-        />
+        <Suspense fallback={null}>
+          <GalaxyScene
+            onPlanetClick={handlePlanetClick}
+            completedWorlds={completedWorlds}
+            onLabelsUpdate={handleLabelsUpdate}
+          />
+        </Suspense>
         <OrbitControls
           enablePan={false}
           minDistance={15}
