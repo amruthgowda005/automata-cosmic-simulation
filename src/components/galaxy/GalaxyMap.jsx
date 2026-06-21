@@ -150,7 +150,7 @@ export default function GalaxyMap() {
 
       {/* 3D Canvas */}
       <Canvas
-        camera={{ position: [0, 10, 24], fov: 52 }}
+        camera={{ position: [0, 16, 36], fov: 55 }}
         gl={{ antialias: true, alpha: false }}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
@@ -161,11 +161,11 @@ export default function GalaxyMap() {
         />
         <OrbitControls
           enablePan={false}
-          minDistance={12}
-          maxDistance={36}
+          minDistance={15}
+          maxDistance={55}
           maxPolarAngle={Math.PI / 1.9}
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={0.3}
         />
       </Canvas>
 

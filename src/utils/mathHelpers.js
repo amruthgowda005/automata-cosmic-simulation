@@ -28,11 +28,11 @@ export function mathBlockHTML(latex) {
 
 // World color map
 export const WORLD_COLORS = {
-  1: '#ff2d55',
-  2: '#ff6b00',
-  3: '#ffd60a',
-  4: '#0a84ff',
-  5: '#bf5af2',
+  1: '#a3a3a3',
+  2: '#ffd60a',
+  3: '#0a84ff',
+  4: '#ff3b30',
+  5: '#ff9500',
 }
 
 export const WORLD_NAMES = {

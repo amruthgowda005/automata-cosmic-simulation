@@ -5,18 +5,18 @@
   --bg: #0a0a0f;
   --text: #ffffff;
   --text-secondary: #8888aa;
-  --world1: #ff2d55;
-  --world2: #ff6b00;
-  --world3: #ffd60a;
-  --world4: #0a84ff;
-  --world5: #bf5af2;
+  --world1: #a3a3a3;
+  --world2: #ffd60a;
+  --world3: #0a84ff;
+  --world4: #ff3b30;
+  --world5: #ff9500;
   --glass-bg: rgba(255,255,255,0.04);
   --glass-border: rgba(255,255,255,0.10);
-  --glow-red: 0 0 20px #ff2d55, 0 0 40px #ff2d5580;
-  --glow-orange: 0 0 20px #ff6b00, 0 0 40px #ff6b0080;
-  --glow-yellow: 0 0 20px #ffd60a, 0 0 40px #ffd60a80;
-  --glow-blue: 0 0 20px #0a84ff, 0 0 40px #0a84ff80;
-  --glow-purple: 0 0 20px #bf5af2, 0 0 40px #bf5af280;
+  --glow-red: 0 0 20px #a3a3a3, 0 0 40px #a3a3a380;
+  --glow-orange: 0 0 20px #ffd60a, 0 0 40px #ffd60a80;
+  --glow-yellow: 0 0 20px #0a84ff, 0 0 40px #0a84ff80;
+  --glow-blue: 0 0 20px #ff3b30, 0 0 40px #ff3b3080;
+  --glow-purple: 0 0 20px #ff9500, 0 0 40px #ff950080;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

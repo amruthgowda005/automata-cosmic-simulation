@@ -3,11 +3,11 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 export const WORLD_CONFIGS = [
-  { id: 1, color: '#ff2d55', name: 'Decision Properties', orbitRadius: 3.5, orbitSpeed: 0.3, size: 0.5 },
-  { id: 2, color: '#ff6b00', name: 'Algebraic Laws',      orbitRadius: 5.5, orbitSpeed: 0.22, size: 0.6 },
-  { id: 3, color: '#ffd60a', name: 'CFG Ambiguity',       orbitRadius: 7.5, orbitSpeed: 0.16, size: 0.55 },
-  { id: 4, color: '#0a84ff', name: 'DPDA',                orbitRadius: 9.5, orbitSpeed: 0.12, size: 0.65 },
-  { id: 5, color: '#bf5af2', name: 'GNF',                 orbitRadius: 11.5, orbitSpeed: 0.09, size: 0.6 },
+  { id: 1, color: '#a3a3a3', name: 'Decision Properties', orbitRadius: 4, orbitSpeed: 0.5, size: 0.35 },
+  { id: 2, color: '#ffd60a', name: 'Algebraic Laws',      orbitRadius: 6.5, orbitSpeed: 0.4, size: 0.55 },
+  { id: 3, color: '#0a84ff', name: 'CFG Ambiguity',       orbitRadius: 9, orbitSpeed: 0.3, size: 0.6 },
+  { id: 4, color: '#ff3b30', name: 'DPDA',                orbitRadius: 11.5, orbitSpeed: 0.25, size: 0.45 },
+  { id: 5, color: '#ff9500', name: 'GNF',                 orbitRadius: 16, orbitSpeed: 0.15, size: 1.4 },
 ]
 
 // Returns the current 3D world position of each planet for screen-space label overlay
@@ -19,9 +19,10 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
   const pivotRef = useRef()
   const meshRef = useRef()
   const glowRef = useRef()
+  const moonPivotRef = useRef()
   const [hovered, setHovered] = useState(false)
 
-  const { color, orbitRadius, orbitSpeed, size } = config
+  const { id, color, orbitRadius, orbitSpeed, size } = config
 
   useFrame(({ clock, camera }) => {
     const t = clock.elapsedTime
@@ -32,6 +33,9 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.008
       meshRef.current.rotation.x += 0.003
+    }
+    if (moonPivotRef.current) {
+      moonPivotRef.current.rotation.y += 0.02
     }
     if (glowRef.current) {
       const pulse = 0.4 + Math.sin(t * 2) * 0.15
@@ -74,6 +78,16 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
             metalness={0.3}
           />
         </mesh>
+
+        {/* Earth's Moon */}
+        {id === 3 && (
+          <group ref={moonPivotRef}>
+            <mesh position={[size * 1.8, 0, 0]}>
+              <sphereGeometry args={[size * 0.25, 16, 16]} />
+              <meshStandardMaterial color="#d1d5db" roughness={0.8} />
+            </mesh>
+          </group>
+        )}
 
         {/* Conquest halo */}
         {isCompleted && (
