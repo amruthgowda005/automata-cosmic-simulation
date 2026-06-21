@@ -10,8 +10,8 @@ import useAppStore from '../../store/useAppStore'
 function OrbitRing({ radius }) {
   return (
     <mesh rotation={[Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[radius, 0.025, 6, 120]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
+      <torusGeometry args={[radius, 0.015, 8, 128]} />
+      <meshBasicMaterial color="#ffffff" transparent opacity={0.3} />
     </mesh>
   )
 }
@@ -20,33 +20,44 @@ function OrbitRing({ radius }) {
 function CentralStar() {
   const meshRef = useRef()
   const coronaRef = useRef()
+  const sunTexture = useLoader(THREE.TextureLoader, '/textures/sun.jpg')
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.003
-      const s = 1 + Math.sin(t * 1.5) * 0.04
+      const s = 1 + Math.sin(t * 1.5) * 0.01
       meshRef.current.scale.setScalar(s)
     }
     if (coronaRef.current) {
-      coronaRef.current.material.opacity = 0.15 + Math.sin(t * 2) * 0.08
-      coronaRef.current.rotation.z += 0.004
+      coronaRef.current.material.opacity = 0.2 + Math.sin(t * 3) * 0.05
+      coronaRef.current.rotation.y -= 0.002
     }
   })
 
   return (
     <group>
-      {/* Corona glow */}
+      {/* Corona glow - large additive sphere */}
       <mesh ref={coronaRef}>
-        <sphereGeometry args={[1.6, 16, 16]} />
-        <meshBasicMaterial color="#ffdd88" transparent opacity={0.2} />
+        <sphereGeometry args={[2.2, 32, 32]} />
+        <meshBasicMaterial color="#ff7700" transparent opacity={0.25} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      {/* Outer ambient glow */}
+      <mesh>
+        <sphereGeometry args={[3.5, 32, 32]} />
+        <meshBasicMaterial color="#ffaa00" transparent opacity={0.08} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
       {/* Star surface */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[0.9, 32, 32]} />
-        <meshStandardMaterial color="#fff5cc" emissive="#ffaa00" emissiveIntensity={1.5} />
+        <sphereGeometry args={[1.2, 64, 64]} />
+        <meshStandardMaterial 
+          map={sunTexture} 
+          emissive="#ffaa00" 
+          emissiveMap={sunTexture}
+          emissiveIntensity={1.2} 
+        />
       </mesh>
-      <pointLight color="#ffdd88" intensity={3} distance={40} />
+      <pointLight color="#ffdd88" intensity={4} distance={60} />
     </group>
   )
 }

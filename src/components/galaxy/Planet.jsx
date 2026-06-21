@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 
 export const WORLD_CONFIGS = [
-  { id: 1, color: '#a3a3a3', name: 'Decision Properties', orbitRadius: 4, orbitSpeed: 0.5, size: 0.35 },
-  { id: 2, color: '#ffd60a', name: 'Algebraic Laws',      orbitRadius: 6.5, orbitSpeed: 0.4, size: 0.55 },
-  { id: 3, color: '#0a84ff', name: 'CFG Ambiguity',       orbitRadius: 9, orbitSpeed: 0.3, size: 0.6 },
-  { id: 4, color: '#ff3b30', name: 'DPDA',                orbitRadius: 11.5, orbitSpeed: 0.25, size: 0.45 },
-  { id: 5, color: '#ff9500', name: 'GNF',                 orbitRadius: 16, orbitSpeed: 0.15, size: 1.4 },
+  { id: 1, texture: '/textures/mercury.jpg', color: '#a3a3a3', name: 'Decision Properties', orbitRadius: 4, orbitSpeed: 0.5, size: 0.35 },
+  { id: 2, texture: '/textures/venus.jpg', color: '#ffd60a', name: 'Algebraic Laws',      orbitRadius: 6.5, orbitSpeed: 0.4, size: 0.55 },
+  { id: 3, texture: '/textures/earth.jpg', color: '#0a84ff', name: 'CFG Ambiguity',       orbitRadius: 9, orbitSpeed: 0.3, size: 0.6 },
+  { id: 4, texture: '/textures/mars.jpg', color: '#ff3b30', name: 'DPDA',                orbitRadius: 11.5, orbitSpeed: 0.25, size: 0.45 },
+  { id: 5, texture: '/textures/jupiter.jpg', color: '#ff9500', name: 'GNF',                 orbitRadius: 16, orbitSpeed: 0.15, size: 1.4 },
 ]
 
 // Returns the current 3D world position of each planet for screen-space label overlay
@@ -22,7 +22,8 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
   const moonPivotRef = useRef()
   const [hovered, setHovered] = useState(false)
 
-  const { id, color, orbitRadius, orbitSpeed, size } = config
+  const { id, color, orbitRadius, orbitSpeed, size, texture } = config
+  const mapTexture = useLoader(THREE.TextureLoader, texture)
 
   useFrame(({ clock, camera }) => {
     const t = clock.elapsedTime
@@ -69,13 +70,13 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
           onPointerEnter={() => { setHovered(true); document.body.style.cursor = 'pointer' }}
           onPointerLeave={() => { setHovered(false); document.body.style.cursor = 'auto' }}
         >
-          <sphereGeometry args={[1, 32, 32]} />
+          <sphereGeometry args={[1, 64, 64]} />
           <meshStandardMaterial
-            color={color}
+            map={mapTexture}
             emissive={color}
-            emissiveIntensity={hovered ? 0.8 : 0.4}
-            roughness={0.3}
-            metalness={0.3}
+            emissiveIntensity={hovered ? 0.3 : 0}
+            roughness={0.7}
+            metalness={0.1}
           />
         </mesh>
 
