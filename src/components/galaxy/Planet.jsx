@@ -74,8 +74,9 @@ export default function Planet({ config, isCompleted, onClick, onPositionUpdate 
           <meshStandardMaterial
             map={mapTexture}
             emissive={color}
-            emissiveIntensity={hovered ? 0.3 : 0}
-            roughness={0.7}
+            emissiveMap={mapTexture}
+            emissiveIntensity={hovered ? 0.7 : 0.25}
+            roughness={0.6}
             metalness={0.1}
           />
         </mesh>

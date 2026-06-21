@@ -1,5 +1,5 @@
 import { useRef, useMemo, useCallback, useState, Suspense } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion } from 'framer-motion'
@@ -116,7 +116,9 @@ function GalaxyScene({ onPlanetClick, completedWorlds, onLabelsUpdate }) {
 
   return (
     <>
-      <ambientLight intensity={0.15} />
+      <ambientLight intensity={1.8} />
+      <directionalLight position={[20, 10, 10]} intensity={1.2} />
+      <directionalLight position={[-20, -10, -10]} intensity={0.5} />
       <Stars radius={90} depth={60} count={4000} factor={3} saturation={0} fade speed={0.6} />
       <CentralStar />
 
